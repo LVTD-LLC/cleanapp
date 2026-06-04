@@ -4,23 +4,23 @@ export function showMessage(message, type = 'error') {
 
   const messageId = Date.now();
   const messageHTML = `
-    <div data-reveal-target="item" data-message-id="${messageId}" class="rounded-lg border ${type === 'error' ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'} p-4 shadow-sm transition-all duration-300 ease-in-out opacity-0 transform translate-x-full max-w-sm">
+    <div data-reveal-target="item" data-message-id="${messageId}" class="ca-panel max-w-sm p-4 opacity-0 transition-all duration-300 ease-in-out translate-x-full ${type === 'error' ? 'border-[oklch(0.86_0.08_25)]' : 'border-[oklch(0.84_0.09_145)]'}">
       <div class="flex items-start">
-        <div class="flex-shrink-0 mr-3">
-          <svg class="w-5 h-5" viewBox="0 0 24 24">
-            <circle class="text-gray-200" stroke-width="2" stroke="currentColor" fill="transparent" r="10" cx="12" cy="12"/>
-            <circle class="${type === 'error' ? 'text-red-600' : 'text-green-600'}" stroke-width="2" stroke="currentColor" fill="transparent" r="10" cx="12" cy="12" data-timer-circle/>
+        <div class="mr-3 flex-shrink-0">
+          <svg class="h-5 w-5" viewBox="0 0 24 24">
+            <circle class="text-[var(--ca-line)]" stroke-width="2" stroke="currentColor" fill="transparent" r="10" cx="12" cy="12"/>
+            <circle class="${type === 'error' ? 'text-[var(--ca-danger)]' : 'text-[var(--ca-success)]'}" stroke-width="2" stroke="currentColor" fill="transparent" r="10" cx="12" cy="12" data-timer-circle/>
           </svg>
         </div>
         <div class="flex-grow">
-          <p class="text-sm ${type === 'error' ? 'text-red-800' : 'text-green-800'}">
+          <p class="text-sm font-semibold ${type === 'error' ? 'text-[var(--ca-danger)]' : 'text-ca-ink'}">
             ${message}
           </p>
         </div>
-        <div class="flex-shrink-0 ml-3">
-          <button onclick="this.closest('[data-reveal-target=item]').remove()" type="button" class="inline-flex justify-center items-center h-5 w-5 rounded-md ${type === 'error' ? 'text-red-600 hover:text-red-800' : 'text-green-600 hover:text-green-800'} focus:outline-none focus:ring-2 focus:ring-offset-2 ${type === 'error' ? 'focus:ring-red-500' : 'focus:ring-green-500'}">
+        <div class="ml-3 flex-shrink-0">
+          <button onclick="this.closest('[data-reveal-target=item]').remove()" type="button" class="inline-flex h-6 w-6 items-center justify-center rounded-md text-ca-muted hover:text-ca-ink">
             <span class="sr-only">Dismiss</span>
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -40,7 +40,7 @@ export function showMessage(message, type = 'error') {
 
 function createMessagesContainer() {
   const container = document.createElement('div');
-  container.className = 'fixed top-4 right-4 z-50 space-y-4 messages-container';
+  container.className = 'fixed right-4 top-4 z-50 space-y-3 messages-container';
   document.body.appendChild(container);
   return container;
 }

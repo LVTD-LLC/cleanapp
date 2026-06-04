@@ -1,43 +1,38 @@
 {% extends 'base_app.html' %}
 {% load account %}
 
-
-{% block head_title %}
-    Confirm Email Address
-{% endblock head_title %}
+{% block meta %}
+  <title>Cleanapp - Confirm Email</title>
+{% endblock meta %}
 
 {% block content %}
-<div class="container px-4 py-8 mx-auto">
-    <div class="mx-auto max-w-3xl">
-        <h1 class="mb-8 text-3xl font-bold text-center">
-            Confirm Email Address
-        </h1>
+<section class="ca-wrap grid min-h-[calc(100vh-7rem)] items-center py-12">
+  <div class="ca-panel mx-auto w-full max-w-2xl p-6 text-center sm:p-8">
+    <h1 class="text-3xl font-black tracking-[-0.03em] text-ca-ink">Confirm email address</h1>
 
-        {% if confirmation %}
-            {% user_display confirmation.email_address.user as user_display %}
-            {% if can_confirm %}
-                <p class="mb-6 text-center">
-                    Please confirm that <a href="mailto:{{ confirmation.email_address.email }}" class="text-blue-600 hover:underline">{{ confirmation.email_address.email }}</a> is an email address for user {{ user_display }}.
-                </p>
-                {% url 'account_confirm_email' confirmation.key as action_url %}
-                <form method="post" action="{{ action_url }}" class="flex justify-center">
-                  {% csrf_token %}
-                    {{ redirect_field }}
-                    <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Confirm
-                    </button>
-                </form>
-            {% else %}
-                <p class="text-center text-red-600">
-                    Unable to confirm {{ confirmation.email_address.email }} because it is already confirmed by a different account.
-                </p>
-            {% endif %}
-        {% else %}
-            {% url 'account_email' as email_url %}
-            <p class="text-center">
-                This email confirmation link expired or is invalid. Please <a href="{{ email_url }}" class="text-blue-600 hover:underline">issue a new email confirmation request</a>.
-            </p>
-        {% endif %}
-    </div>
-</div>
+    {% if confirmation %}
+      {% user_display confirmation.email_address.user as user_display %}
+      {% if can_confirm %}
+        <p class="ca-copy mx-auto mt-4 max-w-xl">
+          Confirm <a href="mailto:{{ confirmation.email_address.email }}" class="font-black text-[var(--ca-primary)] hover:text-[var(--ca-primary-strong)]">{{ confirmation.email_address.email }}</a> for {{ user_display }}.
+        </p>
+        {% url 'account_confirm_email' confirmation.key as action_url %}
+        <form method="post" action="{{ action_url }}" class="mt-6 flex justify-center">
+          {% csrf_token %}
+          {{ redirect_field }}
+          <button type="submit" class="ca-btn ca-btn-primary">Confirm email</button>
+        </form>
+      {% else %}
+        <p class="mt-4 text-sm font-semibold leading-6 text-[var(--ca-danger)]">
+          Unable to confirm {{ confirmation.email_address.email }} because it is already confirmed by a different account.
+        </p>
+      {% endif %}
+    {% else %}
+      {% url 'account_email' as email_url %}
+      <p class="ca-copy mx-auto mt-4 max-w-xl">
+        This confirmation link expired or is invalid. Please <a href="{{ email_url }}" class="font-black text-[var(--ca-primary)] hover:text-[var(--ca-primary-strong)]">request a new confirmation link</a>.
+      </p>
+    {% endif %}
+  </div>
+</section>
 {% endblock content %}
