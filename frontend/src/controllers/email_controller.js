@@ -45,7 +45,7 @@ export default class extends Controller {
       showMessage("An error occurred. Please try again.", "error");
     } finally {
       this.addButtonTarget.disabled = false;
-      this.addButtonTarget.textContent = "Add Email";
+      this.addButtonTarget.textContent = "Add email";
     }
   }
 
@@ -112,24 +112,24 @@ export default class extends Controller {
     const emailItem = document.createElement("div");
     emailItem.setAttribute("data-email-item", "");
     emailItem.className =
-      "flex justify-between items-center p-3 bg-white rounded-md border border-gray-200";
+      "flex flex-col gap-3 rounded-xl border border-[var(--ca-line)] bg-white p-4 sm:flex-row sm:items-center sm:justify-between";
 
     emailItem.innerHTML = `
-      <div class="flex flex-1 items-center space-x-3">
+      <div class="flex flex-1 items-start gap-3">
         <input
           type="checkbox"
           ${enabled ? "checked" : ""}
           data-email-id="${emailId}"
           data-action="change->email#toggleEmail"
-          class="text-blue-600 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          class="mt-1 h-4 w-4 rounded border-[var(--ca-line)] text-[var(--ca-primary)] focus:ring-[var(--ca-primary)]"
         />
-        <div class="flex-1">
-          <p class="text-sm font-medium text-gray-900">${emailAddress}</p>
-          <p class="text-xs text-gray-500">
+        <div class="min-w-0 flex-1">
+          <p class="break-all text-sm font-black text-ca-ink">${emailAddress}</p>
+          <p class="mt-1 text-xs font-bold">
             ${
               enabled
-                ? '<span class="text-green-600">Notifications enabled</span>'
-                : '<span class="text-gray-500">Notifications disabled</span>'
+                ? '<span class="text-[var(--ca-success)]">Notifications enabled</span>'
+                : '<span class="text-ca-muted">Notifications disabled</span>'
             }
           </p>
         </div>
@@ -138,7 +138,7 @@ export default class extends Controller {
         type="button"
         data-email-id="${emailId}"
         data-action="click->email#deleteEmail"
-        class="text-sm font-medium text-red-600 hover:text-red-800"
+        class="ca-btn ca-btn-danger"
       >
         Remove
       </button>

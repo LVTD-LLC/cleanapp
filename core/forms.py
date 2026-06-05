@@ -1,8 +1,9 @@
+from datetime import datetime
+from functools import lru_cache
+
+import pytz
 from allauth.account.forms import LoginForm, SignupForm
 from django import forms
-from datetime import datetime
-import pytz
-from functools import lru_cache
 
 from core.models import Profile, Sitemap
 from core.utils import DivErrorList
@@ -17,14 +18,14 @@ def get_timezone_list():
         try:
             tz = pytz.timezone(tz_name)
             dt = now.astimezone(tz)
-            offset = dt.strftime('%z')
+            offset = dt.strftime("%z")
             offset_hours = f"{offset[:3]}:{offset[3:]}"
             label = f"(UTC{offset_hours}) {tz_name.replace('_', ' ')}"
-            timezones.append({'value': tz_name, 'label': label})
+            timezones.append({"value": tz_name, "label": label})
         except Exception:
-            timezones.append({'value': tz_name, 'label': tz_name})
+            timezones.append({"value": tz_name, "label": tz_name})
 
-    return sorted(timezones, key=lambda x: x['label'])
+    return sorted(timezones, key=lambda x: x["label"])
 
 
 class CustomSignUpForm(SignupForm):
@@ -45,13 +46,10 @@ class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['preferred_email_time', 'timezone']
+        fields = ["preferred_email_time", "timezone"]
         widgets = {
-            'preferred_email_time': forms.TimeInput(attrs={'type': 'time'}),
-            'timezone': forms.TextInput(attrs={
-                'list': 'timezone-list',
-                'autocomplete': 'off'
-            })
+            "preferred_email_time": forms.TimeInput(attrs={"type": "time"}),
+            "timezone": forms.TextInput(attrs={"list": "timezone-list", "autocomplete": "off"}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -77,22 +75,13 @@ class SitemapForm(forms.ModelForm):
         fields = ["sitemap_url", "client_label"]
         widgets = {
             "sitemap_url": forms.URLInput(
-                attrs={
-                    "class": "block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
-                    "placeholder": "https://example.com/sitemap.xml",
-                }
+                attrs={"class": "ca-field mt-1", "placeholder": "https://example.com/sitemap.xml"}
             ),
             "client_label": forms.TextInput(
-                attrs={
-                    "class": "block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
-                    "placeholder": "Acme SEO (optional)",
-                }
+                attrs={"class": "ca-field mt-1", "placeholder": "Acme SEO (optional)"}
             ),
         }
-        labels = {
-            "sitemap_url": "Sitemap URL",
-            "client_label": "Client label",
-        }
+        labels = {"sitemap_url": "Sitemap URL", "client_label": "Client label"}
 
     def clean_client_label(self):
         return (self.cleaned_data.get("client_label") or "").strip()
@@ -104,26 +93,18 @@ class SitemapSettingsForm(forms.ModelForm):
         fields = ["client_label", "pages_per_review", "review_cadence", "is_active"]
         widgets = {
             "client_label": forms.TextInput(
-                attrs={
-                    "class": "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
-                    "placeholder": "Client label",
-                }
+                attrs={"class": "ca-field", "placeholder": "Client label"}
             ),
             "pages_per_review": forms.NumberInput(
-                attrs={
-                    "class": "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
-                    "min": "1",
-                    "max": "50",
-                }
+                attrs={"class": "ca-field", "min": "1", "max": "50"}
             ),
-            "review_cadence": forms.Select(
-                attrs={
-                    "class": "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                }
-            ),
+            "review_cadence": forms.Select(attrs={"class": "ca-field"}),
             "is_active": forms.CheckboxInput(
                 attrs={
-                    "class": "w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                    "class": (
+                        "h-4 w-4 rounded border-[var(--ca-line)] "
+                        "text-[var(--ca-primary)] focus:ring-[var(--ca-primary)]"
+                    )
                 }
             ),
         }
