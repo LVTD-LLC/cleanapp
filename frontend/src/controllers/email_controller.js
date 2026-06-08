@@ -112,7 +112,7 @@ export default class extends Controller {
     const emailItem = document.createElement("div");
     emailItem.setAttribute("data-email-item", "");
     emailItem.className =
-      "flex flex-col gap-3 rounded-xl border border-[var(--ca-line)] bg-white p-4 sm:flex-row sm:items-center sm:justify-between";
+      "flex flex-col gap-3 rounded-xl border border-[var(--pf-line)] bg-white p-4 sm:flex-row sm:items-center sm:justify-between";
 
     emailItem.innerHTML = `
       <div class="flex flex-1 items-start gap-3">
@@ -121,15 +121,15 @@ export default class extends Controller {
           ${enabled ? "checked" : ""}
           data-email-id="${emailId}"
           data-action="change->email#toggleEmail"
-          class="mt-1 h-4 w-4 rounded border-[var(--ca-line)] text-[var(--ca-primary)] focus:ring-[var(--ca-primary)]"
+          class="mt-1 h-4 w-4 rounded border-[var(--pf-line)] text-[var(--pf-brand-dark)] focus:ring-[var(--pf-brand-dark)]"
         />
         <div class="min-w-0 flex-1">
-          <p class="break-all text-sm font-black text-ca-ink">${emailAddress}</p>
+          <p class="break-all text-sm font-black text-[color:var(--pf-ink)]">${emailAddress}</p>
           <p class="mt-1 text-xs font-bold">
             ${
               enabled
-                ? '<span class="text-[var(--ca-success)]">Notifications enabled</span>'
-                : '<span class="text-ca-muted">Notifications disabled</span>'
+                ? '<span class="text-[var(--pf-brand-dark)]">Notifications enabled</span>'
+                : '<span class="text-[color:var(--pf-muted)]">Notifications disabled</span>'
             }
           </p>
         </div>
@@ -138,7 +138,7 @@ export default class extends Controller {
         type="button"
         data-email-id="${emailId}"
         data-action="click->email#deleteEmail"
-        class="ca-btn ca-btn-danger"
+        class="inline-flex items-center justify-center rounded-xl px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
       >
         Remove
       </button>
