@@ -190,6 +190,23 @@ class TestCheckoutSession:
 
 
 @pytest.mark.django_db
+class TestPricingView:
+    def test_pricing_uses_configured_plan_limits(
+        self, auth_client, configured_billing_plans, settings
+    ):
+        settings.CLEANAPP_BILLING_PLANS["starter"]["site_limit"] = 7
+        settings.CLEANAPP_BILLING_PLANS["agency"]["site_limit"] = 42
+
+        response = auth_client.get(reverse("pricing"))
+
+        assert response.status_code == 200
+        assert response.context["starter_site_limit"] == 7
+        assert response.context["agency_site_limit"] == 42
+        assert b">7<" in response.content
+        assert b">42<" in response.content
+
+
+@pytest.mark.django_db
 class TestUserSettingsView:
     def test_settings_updates_first_and_last_name(self, auth_client, user):
         response = auth_client.post(

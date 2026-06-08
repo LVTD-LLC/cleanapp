@@ -52,8 +52,8 @@
 
     <div class="pf-panel p-6">
       <h2 class="text-xl font-semibold text-[color:var(--pf-ink)]">Starter</h2>
-      <p class="mt-4 text-4xl font-semibold text-[color:var(--pf-ink)]">5</p>
-      <p class="mt-1 text-sm text-[color:var(--pf-muted)]">active sites</p>
+      <p class="mt-4 text-4xl font-semibold text-[color:var(--pf-ink)]">{{ starter_site_limit }}</p>
+      <p class="mt-1 text-sm text-[color:var(--pf-muted)]">active site{{ starter_site_limit|pluralize }}</p>
       <ul role="list" class="mt-6 grid gap-3 text-sm leading-6 text-[color:var(--pf-muted)]">
         <li>Client labels for grouping sites</li>
         <li>Custom pages per review email</li>
@@ -75,8 +75,8 @@
 
     <div class="rounded-2xl bg-[color:var(--pf-ink)] p-6 text-white">
       <h2 class="text-xl font-semibold">Agency</h2>
-      <p class="mt-4 text-4xl font-semibold">30</p>
-      <p class="mt-1 text-sm text-white/75">active sites</p>
+      <p class="mt-4 text-4xl font-semibold">{{ agency_site_limit }}</p>
+      <p class="mt-1 text-sm text-white/75">active site{{ agency_site_limit|pluralize }}</p>
       <ul role="list" class="mt-6 grid gap-3 text-sm leading-6 text-white/75">
         <li>More room for client portfolios</li>
         <li>Digest summaries by client and site</li>

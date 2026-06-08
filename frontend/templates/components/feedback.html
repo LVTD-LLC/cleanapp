@@ -21,6 +21,7 @@
       <p class="mt-2 text-sm leading-6 text-[color:var(--pf-muted)]">Tell us what would make PageFresh easier to use.</p>
 
       <form data-action="submit->feedback#submitFeedback" class="mt-5">
+        {% csrf_token %}
         <div>
           <label for="feedback-message" class="pf-label">Feedback</label>
           <textarea

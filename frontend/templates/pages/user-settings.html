@@ -35,7 +35,7 @@
             <button type="submit" class="pf-button-secondary w-full">Manage subscription</button>
           </form>
         {% else %}
-          <form method="post" action="{% url 'user_upgrade_checkout_session' pk=user.id plan='monthly' %}" class="mt-4">
+          <form method="post" action="{% url 'user_upgrade_checkout_session' pk=user.id plan='starter' %}" class="mt-4">
             {% csrf_token %}
             <button type="submit" class="pf-button-primary w-full">Upgrade plan</button>
           </form>
