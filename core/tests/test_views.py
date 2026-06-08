@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 
 import pytest
+from allauth.account.models import EmailAddress
 from django.test import RequestFactory
 from django.urls import reverse
 
@@ -208,6 +209,17 @@ class TestPricingView:
 
 @pytest.mark.django_db
 class TestUserSettingsView:
+    def test_settings_form_preserves_django_field_names(self, auth_client, user):
+        EmailAddress.objects.create(user=user, email=user.email, primary=True, verified=True)
+
+        response = auth_client.get(reverse("settings"))
+
+        assert response.status_code == 200
+        assert b'name="first_name"' in response.content
+        assert b'name="last_name"' in response.content
+        assert b'name="first-name"' not in response.content
+        assert b'name="last-name"' not in response.content
+
     def test_settings_updates_first_and_last_name(self, auth_client, user):
         response = auth_client.post(
             reverse("settings"),

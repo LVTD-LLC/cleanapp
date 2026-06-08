@@ -54,12 +54,12 @@
             <div>
               {{ form.first_name.errors | safe }}
               <label for="{{ form.first_name.id_for_label }}" class="pf-label">First name</label>
-              {% render_field form.first_name id="first-name" name="first-name" type="text" autocomplete="given-name" class="pf-input mt-1" %}
+              {% render_field form.first_name id="first-name" type="text" autocomplete="given-name" class="pf-input mt-1" %}
             </div>
             <div>
               {{ form.last_name.errors | safe }}
               <label for="{{ form.last_name.id_for_label }}" class="pf-label">Last name</label>
-              {% render_field form.last_name id="last-name" name="last-name" type="text" autocomplete="family-name" class="pf-input mt-1" %}
+              {% render_field form.last_name id="last-name" type="text" autocomplete="family-name" class="pf-input mt-1" %}
             </div>
           </div>
         </section>

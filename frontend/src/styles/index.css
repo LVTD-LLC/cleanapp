@@ -163,8 +163,7 @@
   }
 
   .pf-table {
-    @apply min-w-full divide-y;
-    divide-color: var(--pf-line);
+    @apply min-w-full;
   }
 
   .pf-table th {
