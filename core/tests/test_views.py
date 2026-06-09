@@ -237,6 +237,28 @@ class TestPricingView:
         assert response.content.count(b"Current plan is active") == 1
         assert b"Included in Agency" in response.content
 
+    def test_churned_user_with_stale_plan_can_resubscribe(
+        self, auth_client, user, profile, configured_billing_plans
+    ):
+        profile.state = ProfileStates.CHURNED
+        profile.stripe_plan_key = "starter"
+        profile.save(update_fields=["state", "stripe_plan_key"])
+
+        response = auth_client.get(reverse("pricing"))
+
+        starter_checkout_url = reverse(
+            "user_upgrade_checkout_session",
+            kwargs={"pk": user.id, "plan": "starter"},
+        ).encode()
+        agency_checkout_url = reverse(
+            "user_upgrade_checkout_session",
+            kwargs={"pk": user.id, "plan": "agency"},
+        ).encode()
+        assert response.status_code == 200
+        assert b"Current plan is active" not in response.content
+        assert starter_checkout_url in response.content
+        assert agency_checkout_url in response.content
+
 
 @pytest.mark.django_db
 class TestUserSettingsView:
